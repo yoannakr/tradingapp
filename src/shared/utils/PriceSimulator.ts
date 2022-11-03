@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { store } from "../store/configureStore";
+import { store } from "../store/store";
 import { generatedCurrencies } from "./generatePairs";
 
 // custom actions
