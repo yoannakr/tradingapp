@@ -8,7 +8,8 @@ export const CurrencySwitcher = () => {
   const selectedCurrency = useSelector(selectCurrency);
 
   const { currenciesOptions, error } = useCurrenciesOptions();
-  const onChange = (value: string) => dispatch(changeSelectedCurrency(value));
+  const handleCurrencyChange = (value: string) =>
+    dispatch(changeSelectedCurrency(value));
 
   if (error) {
     return <span>{error}</span>;
@@ -18,7 +19,7 @@ export const CurrencySwitcher = () => {
     <BORadioGroup
       options={currenciesOptions}
       value={selectedCurrency}
-      onChange={onChange}
+      onChange={handleCurrencyChange}
       buttonStyle="solid"
       optionType="button"
     />

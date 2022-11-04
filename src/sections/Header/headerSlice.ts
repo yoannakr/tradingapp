@@ -1,13 +1,14 @@
-import { BalanceWithCurrency } from "./types/index";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../shared/store/store";
 import { generateUserBalances } from "../../shared/utils/generateBalances";
+import { AmountWithCurrency } from "../../shared/types/AmountWithCurrency";
+import { mapObjectToBalanceWithCurrencies } from "../../shared/utils/mapObjectToBalanceWithCurrencies";
 
 export interface HeaderState {
   hasFetched: boolean;
   loading: boolean;
   currency: string;
-  balanceWithCurrencies: BalanceWithCurrency[];
+  balanceWithCurrencies: AmountWithCurrency[];
   balance: number;
 }
 
@@ -27,12 +28,12 @@ export const headerSlice = createSlice({
       state.loading = true;
     },
     fetchBalanceForEachCurrencySuccess(state, action) {
-      const balanceWithCurrencies = action.payload as BalanceWithCurrency[];
+      const balanceWithCurrencies = action.payload as AmountWithCurrency[];
       state.balanceWithCurrencies = balanceWithCurrencies;
 
       if (balanceWithCurrencies.length !== 0) {
         state.currency = balanceWithCurrencies[0].currency;
-        state.balance = balanceWithCurrencies[0].balance;
+        state.balance = balanceWithCurrencies[0].amount;
       }
 
       state.loading = false;
@@ -46,7 +47,7 @@ export const headerSlice = createSlice({
         state.balanceWithCurrencies.find(
           (balanceWithCurrency) =>
             balanceWithCurrency.currency === action.payload
-        )?.balance ?? 0;
+        )?.amount ?? 0;
 
       state.currency = action.payload;
       state.balance = balance;
@@ -71,13 +72,8 @@ export const fetchBalanceForEachCurrency = () => async (dispatch: any) => {
       data: [value: number];
     };
 
-    const mappedBalanceWithCurrencies: BalanceWithCurrency[] = [];
-    Object.entries(response.data).forEach(([key, value]) => {
-      mappedBalanceWithCurrencies.push({
-        currency: key.toUpperCase(),
-        balance: value,
-      });
-    });
+    const mappedBalanceWithCurrencies: AmountWithCurrency[] =
+      mapObjectToBalanceWithCurrencies(response.data);
 
     dispatch(fetchBalanceForEachCurrencySuccess(mappedBalanceWithCurrencies));
   } catch (error) {

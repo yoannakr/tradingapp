@@ -15,7 +15,7 @@ import { HeaderWrapper } from "./styled";
 export const Header = () => {
   const dispatch = useAppDispatch();
   const balance = useSelector(selectBalance);
-  const currency = useSelector(selectCurrency);
+  const selectedCurrency = useSelector(selectCurrency);
   const loading = useSelector(selectLoading);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const Header = () => {
     <HeaderWrapper>
       <span style={{ marginRight: "1em" }}>{`${balance.toFixed(
         2
-      )} ${currency.toUpperCase()}`}</span>
+      )} ${selectedCurrency.toUpperCase()}`}</span>
       <CurrencySwitcher />
     </HeaderWrapper>
   );
