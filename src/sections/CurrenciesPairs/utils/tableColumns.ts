@@ -8,11 +8,6 @@ export const tableColumns: ColumnsType<FormattedCurrency> = [
     key: "name",
   },
   {
-    title: "Ticker",
-    dataIndex: "ticker",
-    key: "ticker",
-  },
-  {
     title: "Price",
     dataIndex: "price",
     key: "price",

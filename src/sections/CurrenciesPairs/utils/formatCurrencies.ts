@@ -12,9 +12,9 @@ export const formatCurrencies = (
       )?.amount ?? 0;
 
     return {
-      name: currency.name,
+      name: `${currency.name}/${userCurrency.toUpperCase()}`,
       ticker: currency.ticker,
-      price: `${price.toFixed(2)} ${userCurrency.toUpperCase()}`,
+      price: price.toFixed(2),
       isDown: currency.isDown,
     };
   });
