@@ -44,12 +44,18 @@ export const currenciesPairsSlice = createSlice({
         action.payload
       );
 
+      state.currencies = mappedCurrencies;
+      if (!state.ticker && mappedCurrencies.length !== 0) {
+        state.ticker = mappedCurrencies[0].ticker.toLowerCase();
+        state.cryptoCurrency = mappedCurrencies[0];
+        return;
+      }
+
       const currency = mappedCurrencies.find(
         (currency) =>
           currency.ticker.toLowerCase() === state.ticker.toLowerCase()
       );
 
-      state.currencies = mappedCurrencies;
       if (currency) {
         state.cryptoCurrency = currency;
       }

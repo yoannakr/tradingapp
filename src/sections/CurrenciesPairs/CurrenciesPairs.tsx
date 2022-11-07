@@ -7,6 +7,7 @@ import { selectCurrency } from "../Header/headerSlice";
 import {
   chooseCurrency,
   resetState,
+  selectCryptoCurrency,
   selectCurrencies,
 } from "./currenciesPairsSlice";
 import { Currency, FormattedCurrency } from "./types";
@@ -17,6 +18,7 @@ import styles from "./CurrenciesPairs.module.scss";
 export const CurrenciesPairs = () => {
   const dispatch = useAppDispatch();
   const selectedCurrency = useSelector(selectCurrency);
+  const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
   const currencies = useSelector(selectCurrencies);
 
   const currenciesToDisplay = useMemo<FormattedCurrency[]>(
@@ -55,6 +57,7 @@ export const CurrenciesPairs = () => {
         onChange: handleRowSelection,
         type: "radio",
         hideSelectAll: true,
+        selectedRowKeys: [selectedCryptoCurrency.ticker],
       }}
       rowKey={"ticker"}
       rowClassName={rowClasses}
