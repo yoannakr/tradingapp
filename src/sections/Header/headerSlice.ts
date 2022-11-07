@@ -52,7 +52,9 @@ export const headerSlice = createSlice({
       state.currency = action.payload;
       state.balance = balance;
     },
-
+    updateBalance(state, action) {
+      state.balance = action.payload;
+    },
     resetState: () => initialState,
   },
 });
@@ -62,6 +64,7 @@ export const {
   fetchBalanceForEachCurrencySuccess,
   fetchBalanceForEachCurrencyFailure,
   changeSelectedCurrency,
+  updateBalance,
   resetState,
 } = headerSlice.actions;
 

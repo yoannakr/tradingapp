@@ -4,8 +4,12 @@ import { useAppDispatch } from "../../app/hooks";
 import { BOTable } from "../../shared/components/antd/DataDisplay/Table/BOTable";
 import { PriceSimulator } from "../../shared/utils/PriceSimulator";
 import { selectCurrency } from "../Header/headerSlice";
-import { resetState, selectCurrencies } from "./currenciesPairsSlice";
-import { FormattedCurrency } from "./types";
+import {
+  chooseCurrency,
+  resetState,
+  selectCurrencies,
+} from "./currenciesPairsSlice";
+import { Currency, FormattedCurrency } from "./types";
 import { formatCurrencies } from "./utils/formatCurrencies";
 import { tableColumns } from "./utils/tableColumns";
 import styles from "./CurrenciesPairs.module.scss";
@@ -39,8 +43,10 @@ export const CurrenciesPairs = () => {
     return classes;
   };
 
-  const handleRowSelection = (_: {}, selectedRows: any) => {
-    //console.log(selectedRows);
+  const handleRowSelection = (_: {}, selectedRows: Currency[]) => {
+    if (selectedRows.length !== 0) {
+      dispatch(chooseCurrency(selectedRows[0]));
+    }
   };
 
   return (
@@ -54,6 +60,7 @@ export const CurrenciesPairs = () => {
       rowClassName={rowClasses}
       columns={tableColumns}
       dataSource={currenciesToDisplay}
+      style={{ width: "100%" }}
     />
   );
 };
