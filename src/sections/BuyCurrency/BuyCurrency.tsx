@@ -74,7 +74,7 @@ export const BuyCurrency = () => {
       />
       <BOInputNumber
         label="Total"
-        value={cryptoCurrencyCount}
+        value={cryptoCurrencyCount.toFixed(8)}
         addonAfter={selectedCryptoCurrency?.ticker}
         style={{ width: "100%" }}
         readOnly={true}
