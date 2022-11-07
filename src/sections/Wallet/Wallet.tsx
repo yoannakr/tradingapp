@@ -11,6 +11,7 @@ export const Wallet = () => {
       rowKey={"ticker"}
       columns={tableColumns}
       dataSource={bitcoinsAvailability}
+      showHeader={false}
       style={{ width: "100%" }}
     />
   );

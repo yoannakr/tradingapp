@@ -63,6 +63,7 @@ export const CurrenciesPairs = () => {
       rowClassName={rowClasses}
       columns={tableColumns}
       dataSource={currenciesToDisplay}
+      showHeader={false}
       style={{ width: "100%" }}
     />
   );
