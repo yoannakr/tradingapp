@@ -10,10 +10,9 @@ import {
   selectCryptoCurrency,
   selectCurrencies,
 } from "./currenciesPairsSlice";
-import { Currency, FormattedCurrency } from "./types";
+import { FormattedCurrency } from "./types";
 import { formatCurrencies } from "./utils/formatCurrencies";
 import { tableColumns } from "./utils/tableColumns";
-import styles from "./CurrenciesPairs.module.scss";
 
 export const CurrenciesPairs = () => {
   const dispatch = useAppDispatch();
@@ -36,34 +35,28 @@ export const CurrenciesPairs = () => {
     // eslint-disable-next-line
   }, []);
 
-  const rowClasses = (row: any) => {
-    let classes = "";
-    if (row.isDown !== undefined) {
-      classes += row.isDown ? `${styles.CurrencyDown}` : `${styles.CurrencyUp}`;
-    }
-
-    return classes;
-  };
-
-  const handleRowSelection = (_: {}, selectedRows: Currency[]) => {
-    if (selectedRows.length !== 0) {
-      dispatch(chooseCurrency(selectedRows[0]));
-    }
+  const handleRowClick = (row: FormattedCurrency) => {
+    dispatch(chooseCurrency(row));
   };
 
   return (
     <BOTable
       rowSelection={{
-        onChange: handleRowSelection,
         type: "radio",
         hideSelectAll: true,
         selectedRowKeys: [selectedCryptoCurrency.ticker],
       }}
       rowKey={"ticker"}
-      rowClassName={rowClasses}
       columns={tableColumns}
       dataSource={currenciesToDisplay}
       showHeader={false}
+      onRow={(row: FormattedCurrency, _) => {
+        return {
+          onClick: (_) => {
+            handleRowClick(row);
+          },
+        };
+      }}
       style={{ width: "100%" }}
     />
   );
