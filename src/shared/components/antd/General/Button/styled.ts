@@ -7,7 +7,8 @@ export const Button = styled(AntdButton)<AntdButtonProps>`
   background-color: #2a3139;
   border: none;
   color: rgb(240, 185, 11);
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: #2a3139;
     color: rgb(240, 185, 11);
   }

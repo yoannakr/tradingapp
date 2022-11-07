@@ -59,12 +59,12 @@ export const BuyCurrency = () => {
 
   return (
     <BuyCurrencyWrapper>
-      <BOInputNumber
-        label="Price"
-        value={price.toFixed(2)}
-        addonAfter={selectedCryptoCurrency?.ticker}
-        style={{ width: "100%" }}
-      />
+      <div style={{ marginBottom: "1em" }}>
+        <span style={{ color: "#7f838c" }}>Avbl </span>
+        <span style={{ color: "white" }}>{`${balance.toFixed(
+          2
+        )} ${selectedCurrency}`}</span>
+      </div>
       <BOInputNumber
         label="Amount"
         value={amount}
@@ -72,7 +72,13 @@ export const BuyCurrency = () => {
         style={{ width: "100%" }}
         onChange={handleAmountChange}
       />
-      <div>{cryptoCurrencyCount}</div>
+      <BOInputNumber
+        label="Total"
+        value={cryptoCurrencyCount}
+        addonAfter={selectedCryptoCurrency?.ticker}
+        style={{ width: "100%" }}
+        readOnly={true}
+      />
       <BOButton
         style={{ width: "100%" }}
         content={`Buy ${selectedCryptoCurrency?.ticker}`}
