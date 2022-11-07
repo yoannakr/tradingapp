@@ -10,6 +10,7 @@ export interface Currency {
 
 export interface FormattedCurrency {
   name: string;
+  userCurrency: string;
   ticker: string;
   price: string;
   isDown: boolean;
