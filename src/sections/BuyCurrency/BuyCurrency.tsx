@@ -26,10 +26,10 @@ export const BuyCurrency = () => {
     selectedCurrency
   );
 
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number | undefined>(undefined);
 
   const cryptoCurrencyCount = useMemo<number>(
-    () => calculateCryptoCurrencyCount(price, amount),
+    () => calculateCryptoCurrencyCount(price, amount ?? 0),
     [price, amount]
   );
 
@@ -40,7 +40,7 @@ export const BuyCurrency = () => {
   };
 
   const handleBuyCryptoCurrency = () => {
-    const newBalance = balance - amount;
+    const newBalance = balance - (amount ?? 0);
     if (newBalance < 0) {
       BOMessage.error("Cannot buy bitcoin, not enough balance.");
       return;
@@ -68,6 +68,7 @@ export const BuyCurrency = () => {
       <BOInputNumber
         label="Amount"
         value={amount}
+        placeholder={"0"}
         addonAfter={selectedCurrency}
         style={{ width: "100%" }}
         onChange={handleAmountChange}

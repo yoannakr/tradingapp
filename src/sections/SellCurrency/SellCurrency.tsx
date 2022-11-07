@@ -28,10 +28,10 @@ export const SellCurrency = () => {
   );
   const availableCount = useAvailableCount(selectedCryptoCurrency.ticker);
 
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number | undefined>(undefined);
 
   const receivedAmount = useMemo<number>(
-    () => calculateReceivedAmount(price, amount),
+    () => calculateReceivedAmount(price, amount ?? 0),
     [price, amount]
   );
 
@@ -42,7 +42,7 @@ export const SellCurrency = () => {
   };
 
   const handleSellCryptoCurrency = () => {
-    const newCryptoCurrencyCount = availableCount - amount;
+    const newCryptoCurrencyCount = availableCount - (amount ?? 0);
     if (newCryptoCurrencyCount < 0) {
       BOMessage.error("Cannot sell bitcoin, not enough available count.");
       return;
@@ -55,7 +55,7 @@ export const SellCurrency = () => {
       decrementBitcoinAvailability({
         name: selectedCryptoCurrency.name,
         ticker: selectedCryptoCurrency.ticker,
-        availableCount: amount,
+        availableCount: amount ?? 0,
       })
     );
     BOMessage.success("Bitcoin was sold successful.");
@@ -72,6 +72,7 @@ export const SellCurrency = () => {
       <BOInputNumber
         label="Amount"
         value={amount}
+        placeholder={"0"}
         addonAfter={selectedCryptoCurrency?.ticker}
         style={{ width: "100%" }}
         onChange={handleAmountChange}
