@@ -19,7 +19,11 @@ export const tableColumns: ColumnsType<FormattedCurrency> = [
     key: "price",
     render: (_, row: FormattedCurrency) => {
       const textColor = row.isDown ? "red" : "green";
-      return <span style={{ color: textColor }}>{`${row.price}`}</span>;
+      return (
+        <div style={{ textAlign: "center" }}>
+          <span style={{ color: textColor }}>{`${row.price}`}</span>
+        </div>
+      );
     },
   },
 ];

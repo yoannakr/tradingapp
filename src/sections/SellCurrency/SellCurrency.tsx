@@ -64,7 +64,7 @@ export const SellCurrency = () => {
   return (
     <SellCurrencyWrapper>
       <div style={{ marginBottom: "1em" }}>
-        <span style={{ color: "grey" }}>Avbl </span>
+        <span style={{ color: "#7f838c" }}>Avbl </span>
         <span style={{ color: "white" }}>{`${availableCount.toFixed(8)} ${
           selectedCryptoCurrency.ticker
         }`}</span>

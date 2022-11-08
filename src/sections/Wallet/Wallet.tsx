@@ -1,21 +1,22 @@
 import { useSelector } from "react-redux";
 import { BOTable } from "../../shared/components/antd";
+import { WalletWrapper } from "./styled";
 import { tableColumns } from "./utils/tableColumns";
 import { selectBitcoinsAvailability } from "./walletSlice";
 
 export const Wallet = () => {
   const bitcoinsAvailability = useSelector(selectBitcoinsAvailability);
 
-  // TODO: styled component
   return (
-    <div
-      style={{
-        backgroundColor: "#16191e",
-        width: "100%",
-        border: "1px solid grey",
-      }}
-    >
-      <div style={{ color: "white", marginLeft: "1em", marginTop: "1em" }}>
+    <WalletWrapper>
+      <div
+        style={{
+          color: "white",
+          marginLeft: "1em",
+          marginTop: "1em",
+          marginBottom: "1em",
+        }}
+      >
         Wallet
       </div>
       <BOTable
@@ -23,7 +24,8 @@ export const Wallet = () => {
         columns={tableColumns}
         dataSource={bitcoinsAvailability}
         showHeader={false}
+        scroll={{ y: 200, x: "max-content" }}
       />
-    </div>
+    </WalletWrapper>
   );
 };

@@ -20,8 +20,8 @@ export const CurrencySwitcher = () => {
       options={currenciesOptions}
       value={selectedCurrency}
       onChange={handleCurrencyChange}
-      buttonStyle="solid"
       optionType="button"
+      buttonStyle="solid"
     />
   );
 };

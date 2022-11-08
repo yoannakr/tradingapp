@@ -1,7 +1,9 @@
-import { Radio, RadioGroupProps, RadioChangeEvent } from "antd";
+import { RadioChangeEvent } from "antd";
 import "antd/dist/antd.css";
+import { AntdRadioGroupProps, RadioGroup } from "./styled";
 
-export interface BORadioGroupProps extends Omit<RadioGroupProps, "onChange"> {
+export interface BORadioGroupProps
+  extends Omit<AntdRadioGroupProps, "onChange"> {
   onChange?: (value: string, name?: string) => void;
 }
 
@@ -10,5 +12,5 @@ export const BORadioGroup = (props: BORadioGroupProps) => {
     props.onChange && props.onChange(e.target.value, props.name);
   };
 
-  return <Radio.Group {...props} onChange={onChange} />;
+  return <RadioGroup {...props} onChange={onChange} />;
 };

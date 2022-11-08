@@ -10,6 +10,7 @@ import {
   selectCryptoCurrency,
   selectCurrencies,
 } from "./currenciesPairsSlice";
+import { CurrenciesPairsWrapper } from "./styled";
 import { FormattedCurrency } from "./types";
 import { formatCurrencies } from "./utils/formatCurrencies";
 import { tableColumns } from "./utils/tableColumns";
@@ -40,24 +41,29 @@ export const CurrenciesPairs = () => {
   };
 
   return (
-    <BOTable
-      rowSelection={{
-        type: "radio",
-        hideSelectAll: true,
-        selectedRowKeys: [selectedCryptoCurrency.ticker],
-      }}
-      rowKey={"ticker"}
-      columns={tableColumns}
-      dataSource={currenciesToDisplay}
-      showHeader={false}
-      onRow={(row: FormattedCurrency, _) => {
-        return {
-          onClick: (_) => {
-            handleRowClick(row);
-          },
-        };
-      }}
-      style={{ width: "100%" }}
-    />
+    <CurrenciesPairsWrapper>
+      <div style={{ color: "white", marginLeft: "1em", marginTop: "1em" }}>
+        Pairs
+      </div>
+      <BOTable
+        rowSelection={{
+          type: "radio",
+          hideSelectAll: true,
+          selectedRowKeys: [selectedCryptoCurrency.ticker],
+        }}
+        rowKey={"ticker"}
+        columns={tableColumns}
+        dataSource={currenciesToDisplay}
+        showHeader={false}
+        onRow={(row: FormattedCurrency, _) => {
+          return {
+            onClick: (_) => {
+              handleRowClick(row);
+            },
+          };
+        }}
+        scroll={{ y: 677, x: "max-content" }}
+      />
+    </CurrenciesPairsWrapper>
   );
 };

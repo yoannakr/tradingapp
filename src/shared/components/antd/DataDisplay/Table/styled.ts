@@ -8,7 +8,14 @@ export const Table = styled(AntdTable)<AntdTableProps<any>>`
     background-color: #16191e;
     color: grey;
   }
+  .ant-table-cell {
+    white-space: nowrap;
+    padding-left: 2em;
+  }
   .ant-table-selection-column {
+    display: none;
+  }
+  .ant-table-body::-webkit-scrollbar {
     display: none;
   }
   .ant-table-tbody > tr.ant-table-row-selected > td {
@@ -17,7 +24,6 @@ export const Table = styled(AntdTable)<AntdTableProps<any>>`
   .ant-table-tbody > tr > td {
     border: none;
   }
-
   && tbody > tr:hover > td {
     background: rgb(43, 49, 57);
   }
