@@ -12,6 +12,14 @@ export const Table = styled(AntdTable)<AntdTableProps<any>>`
     white-space: nowrap;
     padding-left: 2em;
   }
+  .ant-table-thead .ant-table-cell {
+    background-color: #16191e;
+    color: grey;
+    padding: 0.5em;
+    text-align: center;
+    border-bottom: none;
+    font-size: 1em;
+  }
   .ant-table-selection-column {
     display: none;
   }
