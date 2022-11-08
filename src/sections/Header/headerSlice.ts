@@ -5,7 +5,6 @@ import { AmountWithCurrency } from "../../shared/types/AmountWithCurrency";
 import { mapObjectToBalanceWithCurrencies } from "../../shared/utils/mapObjectToBalanceWithCurrencies";
 
 export interface HeaderState {
-  hasFetched: boolean;
   loading: boolean;
   currency: string;
   balanceWithCurrencies: AmountWithCurrency[];
@@ -13,7 +12,6 @@ export interface HeaderState {
 }
 
 const initialState: HeaderState = {
-  hasFetched: false,
   loading: false,
   currency: "",
   balanceWithCurrencies: [],
@@ -37,7 +35,6 @@ export const headerSlice = createSlice({
       }
 
       state.loading = false;
-      state.hasFetched = true;
     },
     fetchBalanceForEachCurrencyFailure(state, action) {
       state.loading = false;
@@ -53,6 +50,14 @@ export const headerSlice = createSlice({
       state.balance = balance;
     },
     updateBalance(state, action) {
+      const balanceWithCurrency = state.balanceWithCurrencies.find(
+        (balanceWithCurrency) => balanceWithCurrency.currency === state.currency
+      );
+
+      if (balanceWithCurrency) {
+        balanceWithCurrency.amount = action.payload;
+      }
+
       state.balance = action.payload;
     },
     resetState: () => initialState,
