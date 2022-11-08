@@ -70,4 +70,11 @@ export const {
 export const selectBitcoinsAvailability = (state: RootState) =>
   state.rootReducer.wallet.bitcoinsAvailability;
 
+export const selectAvailableCountAboutBitcoin = (state: RootState) =>
+  state.rootReducer.wallet.bitcoinsAvailability.find(
+    (bitcoin) =>
+      bitcoin.ticker.toLowerCase() ===
+      state.rootReducer.currenciesPairs.ticker.toLowerCase()
+  )?.availableCount ?? 0;
+
 export default walletSlice.reducer;

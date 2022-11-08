@@ -16,7 +16,7 @@ export const Price = () => {
   return (
     <PriceWrapper>
       <div style={{ fontSize: "2em" }}>{price.toFixed(2)}</div>
-      <div style={{ fontSize: "0.5em" }}>{selectedCryptoCurrency.name}</div>
+      <div style={{ fontSize: "0.5em" }}>{selectedCryptoCurrency?.name}</div>
     </PriceWrapper>
   );
 };

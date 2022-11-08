@@ -1,6 +1,6 @@
 import { AmountWithCurrency } from "../../../shared/types/AmountWithCurrency";
 
-export interface Currency {
+export interface CryptoCurrency {
   name: string;
   prices: AmountWithCurrency[];
   sentiment: number;

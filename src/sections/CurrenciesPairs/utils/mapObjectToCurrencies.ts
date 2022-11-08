@@ -1,8 +1,9 @@
 import { mapObjectToBalanceWithCurrencies } from "../../../shared/utils/mapObjectToBalanceWithCurrencies";
-import { Currency } from "../types";
+import { CryptoCurrency } from "../types";
 
-export const mapObjectToCurrencies = (object: Object): Currency[] => {
-  const mappedCurrencies: Currency[] = [];
+export const mapObjectToCurrencies = (object: Object): CryptoCurrency[] => {
+  const mappedCurrencies: CryptoCurrency[] = [];
+
   Object.entries(object).forEach(([_, value]) => {
     mappedCurrencies.push({
       name: value.name,

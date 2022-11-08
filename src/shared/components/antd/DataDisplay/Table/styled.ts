@@ -12,6 +12,12 @@ export const Table = styled(AntdTable)<AntdTableProps<any>>`
     white-space: nowrap;
     padding-left: 2em;
   }
+  .ant-table-cell-scrollbar {
+    display: none;
+  }
+  .ant-empty-description {
+    color: rgb(240, 185, 11);
+  }
   .ant-table-thead .ant-table-cell {
     background-color: #16191e;
     color: grey;

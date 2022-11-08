@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../app/hooks";
@@ -7,18 +8,20 @@ import { BOButton } from "../../shared/components/antd/General/Button/BOButton";
 import { getBitcoinPriceForCurrency } from "../../shared/utils/getBitcoinPriceForCurrency";
 import { selectCryptoCurrency } from "../CurrenciesPairs/currenciesPairsSlice";
 import {
-  updateBalance,
   selectBalance,
   selectCurrency,
+  updateBalance,
 } from "../Header/headerSlice";
+import { addRecord } from "../History/historySlice";
+import { RecordType } from "../History/types";
 import { incrementBitcoinAvailability } from "../Wallet/walletSlice";
 import { BuyCurrencyWrapper } from "./styled";
 import { calculateCryptoCurrencyCount } from "./utils/calculateCryptoCurrencyCount";
 
 export const BuyCurrency = () => {
   const dispatch = useAppDispatch();
-  const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
   const selectedCurrency = useSelector(selectCurrency);
+  const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
   const balance = useSelector(selectBalance);
 
   const price = getBitcoinPriceForCurrency(
@@ -47,13 +50,26 @@ export const BuyCurrency = () => {
     }
 
     dispatch(updateBalance(newBalance));
+
     dispatch(
       incrementBitcoinAvailability({
-        name: selectedCryptoCurrency.name,
-        ticker: selectedCryptoCurrency.ticker,
+        name: selectedCryptoCurrency?.name ?? "",
+        ticker: selectedCryptoCurrency?.ticker ?? "",
         availableCount: cryptoCurrencyCount,
       })
     );
+
+    dispatch(
+      addRecord({
+        date: moment(),
+        ticker: selectedCryptoCurrency?.ticker ?? "",
+        name: selectedCryptoCurrency?.name ?? "",
+        price: price,
+        count: cryptoCurrencyCount,
+        type: RecordType.BUY,
+      })
+    );
+
     BOMessage.success("Bitcoin was bought successful.");
   };
 

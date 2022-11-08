@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../app/hooks";
@@ -11,8 +12,12 @@ import {
   selectBalance,
   selectCurrency,
 } from "../Header/headerSlice";
-import { decrementBitcoinAvailability } from "../Wallet/walletSlice";
-import { useAvailableCount } from "./hooks/useAvailableCount";
+import { addRecord } from "../History/historySlice";
+import { RecordType } from "../History/types";
+import {
+  decrementBitcoinAvailability,
+  selectAvailableCountAboutBitcoin,
+} from "../Wallet/walletSlice";
 import { SellCurrencyWrapper } from "./styled";
 import { calculateReceivedAmount } from "./utils/calculateReceivedAmount";
 
@@ -21,12 +26,12 @@ export const SellCurrency = () => {
   const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
   const selectedCurrency = useSelector(selectCurrency);
   const balance = useSelector(selectBalance);
+  const availableCount = useSelector(selectAvailableCountAboutBitcoin);
 
   const price = getBitcoinPriceForCurrency(
     selectedCryptoCurrency,
     selectedCurrency
   );
-  const availableCount = useAvailableCount(selectedCryptoCurrency.ticker);
 
   const [amount, setAmount] = useState<number | undefined>(undefined);
 
@@ -53,9 +58,19 @@ export const SellCurrency = () => {
     dispatch(updateBalance(newBalance));
     dispatch(
       decrementBitcoinAvailability({
-        name: selectedCryptoCurrency.name,
-        ticker: selectedCryptoCurrency.ticker,
+        name: selectedCryptoCurrency?.name ?? "",
+        ticker: selectedCryptoCurrency?.ticker ?? "",
         availableCount: amount ?? 0,
+      })
+    );
+    dispatch(
+      addRecord({
+        date: moment(),
+        ticker: selectedCryptoCurrency?.ticker ?? "",
+        name: selectedCryptoCurrency?.name ?? "",
+        price: price,
+        count: amount ?? 0,
+        type: RecordType.SELL,
       })
     );
     BOMessage.success("Bitcoin was sold successful.");
@@ -66,7 +81,7 @@ export const SellCurrency = () => {
       <div style={{ marginBottom: "1em" }}>
         <span style={{ color: "#7f838c" }}>Avbl </span>
         <span style={{ color: "white" }}>{`${availableCount.toFixed(8)} ${
-          selectedCryptoCurrency.ticker
+          selectedCryptoCurrency?.ticker
         }`}</span>
       </div>
       <BOInputNumber

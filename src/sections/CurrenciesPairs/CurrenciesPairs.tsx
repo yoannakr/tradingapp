@@ -5,10 +5,10 @@ import { BOTable } from "../../shared/components/antd/DataDisplay/Table/BOTable"
 import { PriceSimulator } from "../../shared/utils/PriceSimulator";
 import { selectCurrency } from "../Header/headerSlice";
 import {
-  chooseCurrency,
+  setTickerCurrency,
   resetState,
-  selectCryptoCurrency,
   selectCurrencies,
+  selectTicker,
 } from "./currenciesPairsSlice";
 import { CurrenciesPairsWrapper } from "./styled";
 import { FormattedCurrency } from "./types";
@@ -18,8 +18,8 @@ import { tableColumns } from "./utils/tableColumns";
 export const CurrenciesPairs = () => {
   const dispatch = useAppDispatch();
   const selectedCurrency = useSelector(selectCurrency);
-  const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
   const currencies = useSelector(selectCurrencies);
+  const selectedTicker = useSelector(selectTicker);
 
   const currenciesToDisplay = useMemo<FormattedCurrency[]>(
     () => formatCurrencies(currencies, selectedCurrency),
@@ -36,8 +36,15 @@ export const CurrenciesPairs = () => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (!selectedTicker && currencies.length !== 0) {
+      dispatch(setTickerCurrency(currencies[0].ticker));
+    }
+    // eslint-disable-next-line
+  }, [currencies, selectedTicker]);
+
   const handleRowClick = (row: FormattedCurrency) => {
-    dispatch(chooseCurrency(row));
+    dispatch(setTickerCurrency(row.ticker));
   };
 
   return (
@@ -49,7 +56,7 @@ export const CurrenciesPairs = () => {
         rowSelection={{
           type: "radio",
           hideSelectAll: true,
-          selectedRowKeys: [selectedCryptoCurrency.ticker],
+          selectedRowKeys: [selectedTicker],
         }}
         rowKey={"ticker"}
         columns={tableColumns}

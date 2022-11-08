@@ -1,23 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../shared/store/store";
-import { Currency as CryptoCurrency } from "./types";
+import { CryptoCurrency } from "./types";
 import { mapObjectToCurrencies } from "./utils/mapObjectToCurrencies";
 
 export interface CurrenciesPairsState {
   currencies: CryptoCurrency[];
-  cryptoCurrency: CryptoCurrency;
   ticker: string;
 }
 
 const initialState: CurrenciesPairsState = {
   currencies: [],
-  cryptoCurrency: {
-    name: "",
-    prices: [],
-    sentiment: 0,
-    ticker: "",
-    isDown: false,
-  },
   ticker: "",
 };
 
@@ -25,16 +17,8 @@ export const currenciesPairsSlice = createSlice({
   name: "currenciesPairs",
   initialState,
   reducers: {
-    chooseCurrency(state, action) {
-      const currency = state.currencies.find(
-        (currency) =>
-          currency.ticker.toLowerCase() === action.payload.ticker.toLowerCase()
-      );
-
-      state.ticker = action.payload.ticker.toLowerCase();
-      if (currency) {
-        state.cryptoCurrency = currency;
-      }
+    setTickerCurrency(state, action) {
+      state.ticker = action.payload;
     },
     resetState: () => initialState,
   },
@@ -45,30 +29,23 @@ export const currenciesPairsSlice = createSlice({
       );
 
       state.currencies = mappedCurrencies;
-      if (!state.ticker && mappedCurrencies.length !== 0) {
-        state.ticker = mappedCurrencies[0].ticker.toLowerCase();
-        state.cryptoCurrency = mappedCurrencies[0];
-        return;
-      }
-
-      const currency = mappedCurrencies.find(
-        (currency) =>
-          currency.ticker.toLowerCase() === state.ticker.toLowerCase()
-      );
-
-      if (currency) {
-        state.cryptoCurrency = currency;
-      }
     },
   },
 });
 
-export const { chooseCurrency, resetState } = currenciesPairsSlice.actions;
+export const { setTickerCurrency, resetState } = currenciesPairsSlice.actions;
 
 export const selectCurrencies = (state: RootState) =>
   state.rootReducer.currenciesPairs.currencies;
 
 export const selectCryptoCurrency = (state: RootState) =>
-  state.rootReducer.currenciesPairs.cryptoCurrency;
+  state.rootReducer.currenciesPairs.currencies.find(
+    (cryptoCurrency) =>
+      cryptoCurrency.ticker.toLowerCase() ===
+      state.rootReducer.currenciesPairs.ticker.toLowerCase()
+  );
+
+export const selectTicker = (state: RootState) =>
+  state.rootReducer.currenciesPairs.ticker;
 
 export default currenciesPairsSlice.reducer;
