@@ -1,3 +1,4 @@
+import { getBitcoinPriceForCurrency } from "./../../../shared/utils/getBitcoinPriceForCurrency";
 import { FormattedCurrency } from "../types/index";
 import { Currency } from "../types";
 
@@ -6,10 +7,7 @@ export const formatCurrencies = (
   userCurrency: string
 ): FormattedCurrency[] =>
   currencies.map((currency) => {
-    const price =
-      currency.prices.find(
-        (price) => price.currency.toLowerCase() === userCurrency.toLowerCase()
-      )?.amount ?? 0;
+    const price = getBitcoinPriceForCurrency(currency, userCurrency);
 
     return {
       name: currency.name,
