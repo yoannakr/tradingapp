@@ -1,5 +1,5 @@
 import { BuyCurrency } from "../../../sections/BuyCurrency/BuyCurrency";
-import { BuySellHistory } from "../../../sections/BuySellHistory/BuySellHistory";
+import { History } from "../../../sections/History/History";
 import { CurrenciesPairs } from "../../../sections/CurrenciesPairs/CurrenciesPairs";
 import { SellCurrency } from "../../../sections/SellCurrency/SellCurrency";
 import { Price } from "../../../sections/Price/Price";
@@ -10,7 +10,7 @@ export const AppLayout = () => {
   return (
     <Row style={{ height: "100%" }}>
       <Col md={5} style={{ border: "1px solid green" }}>
-        <BuySellHistory />
+        <History />
       </Col>
       <Col
         flex={"auto"}
