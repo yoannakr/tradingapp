@@ -1,5 +1,5 @@
 export interface HistoryRecord {
-  date: moment.Moment;
+  date: string;
   ticker: string;
   name: string;
   price: number;

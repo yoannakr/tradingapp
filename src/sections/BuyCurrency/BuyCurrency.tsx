@@ -72,7 +72,7 @@ export const BuyCurrency = () => {
 
     dispatch(
       addRecord({
-        date: moment(),
+        date: moment().format("DD/MM/yyyy HH:mm"),
         ticker: selectedCryptoCurrency?.ticker ?? "",
         name: selectedCryptoCurrency?.name ?? "",
         price: price,
