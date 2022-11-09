@@ -1,8 +1,8 @@
 import moment from "moment";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../app/hooks";
-import { BOMessage } from "../../shared/components/antd";
+import { BOMessage, BOSlider } from "../../shared/components/antd";
 import { BOInputNumber } from "../../shared/components/antd/DataEntry/InputNumber/BOInputNumber";
 import { BOButton } from "../../shared/components/antd/General/Button/BOButton";
 import { getBitcoinPriceForCurrency } from "../../shared/utils/getBitcoinPriceForCurrency";
@@ -20,6 +20,8 @@ import {
 } from "../Wallet/walletSlice";
 import { SellCurrencyWrapper } from "./styled";
 import { calculateReceivedAmount } from "./utils/calculateReceivedAmount";
+import { sliderMarks } from "../../shared/utils/sliderMarks";
+import { percentageCalculator } from "./utils/percentageCalculator";
 
 export const SellCurrency = () => {
   const dispatch = useAppDispatch();
@@ -34,16 +36,25 @@ export const SellCurrency = () => {
   );
 
   const [amount, setAmount] = useState<number | undefined>(undefined);
+  const [percentageOfCount, setPercentageOfCount] = useState<number>(0);
 
   const receivedAmount = useMemo<number>(
     () => calculateReceivedAmount(price, amount ?? 0),
     [price, amount]
   );
 
+  useEffect(() => {
+    setAmount(percentageCalculator(availableCount, percentageOfCount));
+  }, [availableCount, percentageOfCount]);
+
   const handleAmountChange = (amountInput: any) => {
     if (!isNaN(amountInput)) {
       setAmount(+amountInput);
     }
+  };
+
+  const handlePercentageChange = (percentageOfCountInput: number) => {
+    setPercentageOfCount(percentageOfCountInput);
   };
 
   const handleSellCryptoCurrency = () => {
@@ -86,7 +97,7 @@ export const SellCurrency = () => {
       </div>
       <BOInputNumber
         label="Amount"
-        value={amount}
+        value={amount?.toFixed(8)}
         placeholder={"0"}
         addonAfter={selectedCryptoCurrency?.ticker}
         style={{ width: "100%" }}
@@ -98,6 +109,11 @@ export const SellCurrency = () => {
         addonAfter={selectedCurrency}
         style={{ width: "100%" }}
         readOnly={true}
+      />
+      <BOSlider
+        marks={sliderMarks}
+        value={percentageOfCount}
+        onChange={handlePercentageChange}
       />
       <BOButton
         style={{ width: "100%" }}

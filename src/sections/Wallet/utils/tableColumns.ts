@@ -11,6 +11,6 @@ export const tableColumns: ColumnsType<BitcoinAvailability> = [
     title: "Available count",
     dataIndex: "availableCount",
     key: "availableCount",
-    render: (availableCount: number) => availableCount,
+    render: (availableCount: number) => availableCount.toFixed(8),
   },
 ];

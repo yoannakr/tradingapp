@@ -1,11 +1,12 @@
 import moment from "moment";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../app/hooks";
-import { BOMessage } from "../../shared/components/antd";
+import { BOMessage, BOSlider } from "../../shared/components/antd";
 import { BOInputNumber } from "../../shared/components/antd/DataEntry/InputNumber/BOInputNumber";
 import { BOButton } from "../../shared/components/antd/General/Button/BOButton";
 import { getBitcoinPriceForCurrency } from "../../shared/utils/getBitcoinPriceForCurrency";
+import { sliderMarks } from "../../shared/utils/sliderMarks";
 import { selectCryptoCurrency } from "../CurrenciesPairs/currenciesPairsSlice";
 import {
   selectBalance,
@@ -14,6 +15,7 @@ import {
 } from "../Header/headerSlice";
 import { addRecord } from "../History/historySlice";
 import { RecordType } from "../History/types";
+import { percentageCalculator } from "../SellCurrency/utils/percentageCalculator";
 import { incrementBitcoinAvailability } from "../Wallet/walletSlice";
 import { BuyCurrencyWrapper } from "./styled";
 import { calculateCryptoCurrencyCount } from "./utils/calculateCryptoCurrencyCount";
@@ -30,16 +32,25 @@ export const BuyCurrency = () => {
   );
 
   const [amount, setAmount] = useState<number | undefined>(undefined);
+  const [percentageOfCount, setPercentageOfCount] = useState<number>(0);
 
   const cryptoCurrencyCount = useMemo<number>(
     () => calculateCryptoCurrencyCount(price, amount ?? 0),
     [price, amount]
   );
 
+  useEffect(() => {
+    setAmount(percentageCalculator(balance, percentageOfCount));
+  }, [balance, percentageOfCount]);
+
   const handleAmountChange = (amountInput: any) => {
     if (!isNaN(amountInput)) {
       setAmount(+amountInput);
     }
+  };
+
+  const handlePercentageChange = (percentageOfCountInput: number) => {
+    setPercentageOfCount(percentageOfCountInput);
   };
 
   const handleBuyCryptoCurrency = () => {
@@ -83,7 +94,7 @@ export const BuyCurrency = () => {
       </div>
       <BOInputNumber
         label="Amount"
-        value={amount}
+        value={amount?.toFixed(2)}
         placeholder={"0"}
         addonAfter={selectedCurrency}
         style={{ width: "100%" }}
@@ -95,6 +106,11 @@ export const BuyCurrency = () => {
         addonAfter={selectedCryptoCurrency?.ticker}
         style={{ width: "100%" }}
         readOnly={true}
+      />
+      <BOSlider
+        marks={sliderMarks}
+        value={percentageOfCount}
+        onChange={handlePercentageChange}
       />
       <BOButton
         style={{ width: "100%" }}
