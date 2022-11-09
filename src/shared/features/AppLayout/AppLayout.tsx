@@ -9,7 +9,7 @@ import { Col, Row } from "../../components/antd";
 export const AppLayout = () => {
   return (
     <Row style={{ height: "100%" }}>
-      <Col md={5} style={{ border: "1px solid green" }}>
+      <Col md={5}>
         <History />
       </Col>
       <Col

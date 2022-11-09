@@ -113,9 +113,10 @@ export const BuyCurrency = () => {
         onChange={handlePercentageChange}
       />
       <BOButton
-        style={{ width: "100%" }}
+        style={{ width: "100%", backgroundColor: "#0fcb81", color: "white" }}
         content={`Buy ${selectedCryptoCurrency?.ticker}`}
         onClick={handleBuyCryptoCurrency}
+        disabled={(amount ?? 0) <= 0}
       />
     </BuyCurrencyWrapper>
   );
