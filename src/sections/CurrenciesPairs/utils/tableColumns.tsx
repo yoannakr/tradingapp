@@ -1,7 +1,16 @@
 import { ColumnsType } from "antd/lib/table";
+import { Favorites } from "../features/Favorites/Favorites";
 import { FormattedCurrency } from "../types";
 
 export const tableColumns: ColumnsType<FormattedCurrency> = [
+  {
+    title: "Favorites",
+    dataIndex: "favorites",
+    key: "favorites",
+    render: (_, row: FormattedCurrency) => (
+      <Favorites ticker={row.ticker} isFavorite={row.isFavorite} />
+    ),
+  },
   {
     title: "Name",
     dataIndex: "name",

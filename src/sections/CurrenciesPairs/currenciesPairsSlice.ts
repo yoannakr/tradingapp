@@ -6,11 +6,13 @@ import { mapObjectToCurrencies } from "./utils/mapObjectToCurrencies";
 export interface CurrenciesPairsState {
   currencies: CryptoCurrency[];
   ticker: string;
+  favorites: string[];
 }
 
 const initialState: CurrenciesPairsState = {
   currencies: [],
   ticker: "",
+  favorites: [],
 };
 
 export const currenciesPairsSlice = createSlice({
@@ -19,6 +21,9 @@ export const currenciesPairsSlice = createSlice({
   reducers: {
     setTickerCurrency(state, action) {
       state.ticker = action.payload;
+    },
+    setFavorites(state, action) {
+      state.favorites = action.payload;
     },
     resetState: () => initialState,
   },
@@ -33,7 +38,8 @@ export const currenciesPairsSlice = createSlice({
   },
 });
 
-export const { setTickerCurrency, resetState } = currenciesPairsSlice.actions;
+export const { setTickerCurrency, setFavorites, resetState } =
+  currenciesPairsSlice.actions;
 
 export const selectCurrencies = (state: RootState) =>
   state.rootReducer.currenciesPairs.currencies;
@@ -47,5 +53,8 @@ export const selectCryptoCurrency = (state: RootState) =>
 
 export const selectTicker = (state: RootState) =>
   state.rootReducer.currenciesPairs.ticker;
+
+export const selectFavorites = (state: RootState) =>
+  state.rootReducer.currenciesPairs.favorites;
 
 export default currenciesPairsSlice.reducer;

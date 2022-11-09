@@ -14,4 +14,5 @@ export interface FormattedCurrency {
   ticker: string;
   price: string;
   isDown: boolean;
+  isFavorite: boolean;
 }

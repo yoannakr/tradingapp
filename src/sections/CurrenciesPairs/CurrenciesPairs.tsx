@@ -5,10 +5,11 @@ import { BOTable } from "../../shared/components/antd/DataDisplay/Table/BOTable"
 import { PriceSimulator } from "../../shared/utils/PriceSimulator";
 import { selectCurrency } from "../Header/headerSlice";
 import {
-  setTickerCurrency,
   resetState,
   selectCurrencies,
+  selectFavorites,
   selectTicker,
+  setTickerCurrency,
 } from "./currenciesPairsSlice";
 import { CurrenciesPairsWrapper } from "./styled";
 import { FormattedCurrency } from "./types";
@@ -20,10 +21,11 @@ export const CurrenciesPairs = () => {
   const selectedCurrency = useSelector(selectCurrency);
   const currencies = useSelector(selectCurrencies);
   const selectedTicker = useSelector(selectTicker);
+  const favorites = useSelector(selectFavorites);
 
   const currenciesToDisplay = useMemo<FormattedCurrency[]>(
-    () => formatCurrencies(currencies, selectedCurrency),
-    [currencies, selectedCurrency]
+    () => formatCurrencies(favorites, currencies, selectedCurrency),
+    [favorites, currencies, selectedCurrency]
   );
 
   useEffect(() => {

@@ -4,6 +4,8 @@ export const FIAT = {
   USD: 1.85,
 };
 
+export const FAVORITES = "favorites";
+
 export const ALL_CURRENCIES = [
   {
     name: "Ethereum",
