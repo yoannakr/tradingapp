@@ -13,11 +13,7 @@ export const Favorite = (props: Props) => {
   const textColor = currency.isFavorite ? "#f1bd11" : "#838995";
 
   const handleFavoriteStateChange = () => {
-    dispatch(
-      updateCurrencyFavorite({
-        ticker: currency.ticker,
-      })
-    );
+    dispatch(updateCurrencyFavorite(currency.ticker));
   };
 
   return (
