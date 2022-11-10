@@ -99,8 +99,7 @@ export const CurrenciesPairs = () => {
             },
           };
         }}
-        scroll={{ y: 677, x: "max-content" }}
-        style={{ height: "651px" }}
+        scroll={{ y: 600, x: "max-content" }}
       />
     </CurrenciesPairsWrapper>
   );

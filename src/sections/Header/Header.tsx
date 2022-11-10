@@ -34,9 +34,11 @@ export const Header = () => {
 
   if (loading) {
     return (
-      <BOSpin
-        style={{ display: "flex", justifyContent: "center", padding: "1em" }}
-      />
+      <div
+        style={{ backgroundColor: "#16191e", borderBottom: "1px solid grey" }}
+      >
+        <BOSpin />
+      </div>
     );
   }
 
