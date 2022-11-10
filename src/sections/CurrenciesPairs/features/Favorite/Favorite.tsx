@@ -16,13 +16,12 @@ import { setValueAtLocalStorage } from "../../utils/setValueAtLocalStorage";
 
 interface Props {
   currency: FormattedCurrency;
-  isFavorite: boolean;
 }
 
-export const Favorites = (props: Props) => {
+export const Favorite = (props: Props) => {
   const dispatch = useAppDispatch();
-  const { currency, isFavorite } = props;
-  const textColor = isFavorite ? "#f1bd11" : "#838995";
+  const { currency } = props;
+  const textColor = currency.isFavorite ? "#f1bd11" : "#838995";
   const favorites = useSelector(selectFavorites);
   const showOnlyFavorites = useSelector(selectShowOnlyFavorites);
 
