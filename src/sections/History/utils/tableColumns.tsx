@@ -2,11 +2,21 @@ import { ColumnsType } from "antd/lib/table";
 import { HistoryRecord, RecordType } from "../types";
 
 export const tableColumns: ColumnsType<HistoryRecord> = [
+  {
+    title: "",
+    dataIndex: "type",
+    key: "type",
+    filters: [
+      { text: "Buy", value: RecordType.BUY },
+      { text: "Sell", value: RecordType.SELL },
+    ],
+    onFilter: (value: any, record: HistoryRecord) => record.type === value,
+    render: (date: string) => "",
+  },
   // {
   //   title: "Date",
   //   dataIndex: "date",
   //   key: "date",
-  //   render: (date: moment.Moment) => date.format("DD/MM/yyyy HH:mm"),
   // },
   {
     title: "Name",
