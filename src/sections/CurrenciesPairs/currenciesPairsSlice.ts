@@ -1,11 +1,13 @@
+import { getFavoriteTickers } from "./utils/getFavoriteTickers";
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../shared/store/store";
 import { CryptoCurrency } from "./types";
 import { mapObjectToCurrencies } from "./utils/mapObjectToCurrencies";
+import { setValueAtLocalStorage } from "./utils/setValueAtLocalStorage";
+import { FAVORITES } from "../../shared/utils/constants";
 
 export interface CurrenciesPairsState {
   currencies: CryptoCurrency[];
-  filteredCurrencies: CryptoCurrency[];
   ticker: string;
   favorites: string[];
   showOnlyFavorites: boolean;
@@ -13,7 +15,6 @@ export interface CurrenciesPairsState {
 
 const initialState: CurrenciesPairsState = {
   currencies: [],
-  filteredCurrencies: [],
   ticker: "",
   favorites: [],
   showOnlyFavorites: false,
@@ -29,23 +30,19 @@ export const currenciesPairsSlice = createSlice({
     setFavorites(state, action) {
       state.favorites = action.payload;
     },
-    setCurrencyIsFavorite(state, action) {
-      const { ticker, isFavorite } = action.payload;
+    updateCurrencyFavorite(state, action) {
       const currency = state.currencies.find(
-        (currency) => currency.ticker === ticker
+        (currency) => currency.ticker === action.payload
       );
 
       if (currency) {
-        currency.isFavorite = isFavorite;
+        currency.isFavorite = !currency.isFavorite;
+        state.favorites = getFavoriteTickers(state.currencies);
+        setValueAtLocalStorage(FAVORITES, state.favorites);
       }
     },
     setShowOnlyFavorites(state, action) {
       state.showOnlyFavorites = action.payload;
-    },
-    filterCurrencies(state, action) {
-      state.filteredCurrencies = action.payload
-        ? state.currencies.filter((mappedCurrency) => mappedCurrency.isFavorite)
-        : state.currencies;
     },
     resetState: () => initialState,
   },
@@ -57,9 +54,6 @@ export const currenciesPairsSlice = createSlice({
       );
 
       state.currencies = mappedCurrencies;
-      state.filteredCurrencies = state.showOnlyFavorites
-        ? mappedCurrencies.filter((mappedCurrency) => mappedCurrency.isFavorite)
-        : mappedCurrencies;
     },
   },
 });
@@ -67,14 +61,13 @@ export const currenciesPairsSlice = createSlice({
 export const {
   setTickerCurrency,
   setFavorites,
-  setCurrencyIsFavorite,
+  updateCurrencyFavorite,
   setShowOnlyFavorites,
-  filterCurrencies,
   resetState,
 } = currenciesPairsSlice.actions;
 
-export const selectFilteredCurrencies = (state: RootState) =>
-  state.rootReducer.currenciesPairs.filteredCurrencies;
+export const selectCurrencies = (state: RootState) =>
+  state.rootReducer.currenciesPairs.currencies;
 
 export const selectCryptoCurrency = (state: RootState) =>
   state.rootReducer.currenciesPairs.currencies.find(

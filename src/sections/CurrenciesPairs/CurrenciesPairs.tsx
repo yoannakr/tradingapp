@@ -3,22 +3,21 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../app/hooks";
 import { BOTable } from "../../shared/components/antd/DataDisplay/Table/BOTable";
 import { BOStarFilled } from "../../shared/components/antd/General/Icon/StarFilled/BOStarFilled";
-import { SHOW_ONLY_FAVORITES } from "../../shared/utils/constants";
+import { FAVORITES, SHOW_ONLY_FAVORITES } from "../../shared/utils/constants";
 import { PriceSimulator } from "../../shared/utils/PriceSimulator";
 import { selectCurrency } from "../Header/headerSlice";
 import {
-  filterCurrencies,
   resetState,
-  selectFavorites,
-  selectFilteredCurrencies,
+  selectCurrencies,
   selectShowOnlyFavorites,
   selectTicker,
+  setFavorites,
   setShowOnlyFavorites,
   setTickerCurrency,
 } from "./currenciesPairsSlice";
 import { CurrenciesPairsWrapper } from "./styled";
 import { FormattedCurrency } from "./types";
-import { formatCurrencies } from "./utils/formatCurrencies";
+import { formatAndFilterCurrencies } from "./utils/formatAndFilterCurrencies";
 import { getValueFromLocalStorage } from "./utils/getValueFromLocalStorage";
 import { setValueAtLocalStorage } from "./utils/setValueAtLocalStorage";
 import { tableColumns } from "./utils/tableColumns";
@@ -26,14 +25,18 @@ import { tableColumns } from "./utils/tableColumns";
 export const CurrenciesPairs = () => {
   const dispatch = useAppDispatch();
   const selectedCurrency = useSelector(selectCurrency);
-  const filteredCurrencies = useSelector(selectFilteredCurrencies);
+  const currencies = useSelector(selectCurrencies);
   const selectedTicker = useSelector(selectTicker);
-  const favorites = useSelector(selectFavorites);
   const showOnlyFavorites = useSelector(selectShowOnlyFavorites);
 
   const currenciesToDisplay = useMemo<FormattedCurrency[]>(
-    () => formatCurrencies(favorites, filteredCurrencies, selectedCurrency),
-    [favorites, filteredCurrencies, selectedCurrency]
+    () =>
+      formatAndFilterCurrencies(
+        showOnlyFavorites,
+        currencies,
+        selectedCurrency
+      ),
+    [showOnlyFavorites, currencies, selectedCurrency]
   );
 
   useEffect(() => {
@@ -44,6 +47,9 @@ export const CurrenciesPairs = () => {
     );
     dispatch(setShowOnlyFavorites(showOnlyFavoritesInLocalStorage));
 
+    const favoritesInLocalStorage = getValueFromLocalStorage(FAVORITES, []);
+    dispatch(setFavorites(favoritesInLocalStorage));
+
     return () => {
       PriceSimulator.stop();
       dispatch(resetState());
@@ -52,11 +58,11 @@ export const CurrenciesPairs = () => {
   }, []);
 
   useEffect(() => {
-    if (!selectedTicker && filteredCurrencies.length !== 0) {
-      dispatch(setTickerCurrency(filteredCurrencies[0].ticker));
+    if (!selectedTicker && currencies.length !== 0) {
+      dispatch(setTickerCurrency(currencies[0].ticker));
     }
     // eslint-disable-next-line
-  }, [filteredCurrencies, selectedTicker]);
+  }, [currencies, selectedTicker]);
 
   const handleRowClick = (row: FormattedCurrency) => {
     dispatch(setTickerCurrency(row.ticker));
@@ -66,7 +72,6 @@ export const CurrenciesPairs = () => {
     const newShowOnlyFavorites = !showOnlyFavorites;
 
     dispatch(setShowOnlyFavorites(newShowOnlyFavorites));
-    dispatch(filterCurrencies(newShowOnlyFavorites));
     setValueAtLocalStorage(SHOW_ONLY_FAVORITES, newShowOnlyFavorites);
   };
 

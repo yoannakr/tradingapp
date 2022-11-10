@@ -1,13 +1,17 @@
 import { CryptoCurrency } from "../types";
 import { FormattedCurrency } from "../types/index";
-import { getBitcoinPriceForCurrency } from "./../../../shared/utils/getBitcoinPriceForCurrency";
+import { getBitcoinPriceForCurrency } from "../../../shared/utils/getBitcoinPriceForCurrency";
 
-export const formatCurrencies = (
-  favorites: string[],
+export const formatAndFilterCurrencies = (
+  showOnlyFavorites: boolean,
   currencies: CryptoCurrency[],
   userCurrency: string
-): FormattedCurrency[] =>
-  currencies.map((currency) => {
+): FormattedCurrency[] => {
+  const currenciesForFormat = showOnlyFavorites
+    ? currencies.filter((currency) => currency.isFavorite)
+    : currencies;
+
+  const formattedCurrencies = currenciesForFormat.map((currency) => {
     const price = getBitcoinPriceForCurrency(currency, userCurrency);
 
     return {
@@ -19,3 +23,6 @@ export const formatCurrencies = (
       isFavorite: currency.isFavorite,
     };
   });
+
+  return formattedCurrencies;
+};
