@@ -6,6 +6,7 @@ export interface CryptoCurrency {
   sentiment: number;
   ticker: string;
   isDown: boolean;
+  isFavorite: boolean;
 }
 
 export interface FormattedCurrency {

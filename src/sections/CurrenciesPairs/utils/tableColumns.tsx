@@ -8,7 +8,7 @@ export const tableColumns: ColumnsType<FormattedCurrency> = [
     dataIndex: "favorites",
     key: "favorites",
     render: (_, row: FormattedCurrency) => (
-      <Favorites ticker={row.ticker} isFavorite={row.isFavorite} />
+      <Favorites currency={row} isFavorite={row.isFavorite} />
     ),
   },
   {

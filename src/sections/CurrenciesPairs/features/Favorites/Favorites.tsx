@@ -3,20 +3,28 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../../../app/hooks";
 import { BOStarFilled } from "../../../../shared/components/antd/General/Icon/StarFilled/BOStarFilled";
 import { FAVORITES } from "../../../../shared/utils/constants";
-import { selectFavorites, setFavorites } from "../../currenciesPairsSlice";
+import {
+  filterCurrencies,
+  selectFavorites,
+  selectShowOnlyFavorites,
+  setFavorites,
+  setCurrencyIsFavorite,
+} from "../../currenciesPairsSlice";
+import { FormattedCurrency } from "../../types";
 import { getValueFromLocalStorage } from "../../utils/getValueFromLocalStorage";
 import { setValueAtLocalStorage } from "../../utils/setValueAtLocalStorage";
 
 interface Props {
-  ticker: string;
+  currency: FormattedCurrency;
   isFavorite: boolean;
 }
 
 export const Favorites = (props: Props) => {
   const dispatch = useAppDispatch();
-  const { ticker, isFavorite } = props;
+  const { currency, isFavorite } = props;
   const textColor = isFavorite ? "#f1bd11" : "#838995";
   const favorites = useSelector(selectFavorites);
+  const showOnlyFavorites = useSelector(selectShowOnlyFavorites);
 
   useEffect(() => {
     const favoritesInLocalStorage = getValueFromLocalStorage(FAVORITES, []);
@@ -28,15 +36,22 @@ export const Favorites = (props: Props) => {
   const handleFavoriteStateChange = () => {
     let newFavorites = [...favorites];
 
-    if (newFavorites.includes(ticker)) {
+    if (newFavorites.includes(currency.ticker)) {
       newFavorites = newFavorites.filter(
-        (favorite) => favorite.toLowerCase() !== ticker.toLowerCase()
+        (favorite) => favorite.toLowerCase() !== currency.ticker.toLowerCase()
       );
     } else {
-      newFavorites.push(ticker);
+      newFavorites.push(currency.ticker);
     }
 
+    dispatch(
+      setCurrencyIsFavorite({
+        ticker: currency.ticker,
+        isFavorite: !currency.isFavorite,
+      })
+    );
     dispatch(setFavorites(newFavorites));
+    dispatch(filterCurrencies(showOnlyFavorites));
     setValueAtLocalStorage(FAVORITES, newFavorites);
   };
 

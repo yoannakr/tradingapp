@@ -5,6 +5,7 @@ export const FIAT = {
 };
 
 export const FAVORITES = "favorites";
+export const SHOW_ONLY_FAVORITES = "showOnlyFavorites";
 
 export const ALL_CURRENCIES = [
   {

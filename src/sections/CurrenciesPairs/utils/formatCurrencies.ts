@@ -9,13 +9,6 @@ export const formatCurrencies = (
 ): FormattedCurrency[] =>
   currencies.map((currency) => {
     const price = getBitcoinPriceForCurrency(currency, userCurrency);
-    let isFavorite = false;
-
-    if (favorites.length !== 0) {
-      isFavorite = favorites.some(
-        (favorite) => favorite.toLowerCase() === currency.ticker.toLowerCase()
-      );
-    }
 
     return {
       name: currency.name,
@@ -23,6 +16,6 @@ export const formatCurrencies = (
       ticker: currency.ticker,
       price: price.toFixed(2),
       isDown: currency.isDown,
-      isFavorite: isFavorite,
+      isFavorite: currency.isFavorite,
     };
   });
