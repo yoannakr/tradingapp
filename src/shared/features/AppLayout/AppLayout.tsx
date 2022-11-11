@@ -9,7 +9,7 @@ import { Col, Row } from "../../components/antd";
 export const AppLayout = () => {
   return (
     <Row style={{ height: "100%" }}>
-      <Col md={5}>
+      <Col xs={24} sm={24} md={7}>
         <History />
       </Col>
       <Col
@@ -23,15 +23,17 @@ export const AppLayout = () => {
           <Price />
         </Row>
         <Row>
-          <Col span={12}>
+          <Col xs={24} sm={24} md={12}>
             <BuyCurrency />
           </Col>
-          <Col span={12}>
+          <Col xs={24} sm={24} md={12}>
             <SellCurrency />
           </Col>
         </Row>
       </Col>
       <Col
+        xs={24}
+        sm={24}
         md={5}
         style={{
           display: "flex",

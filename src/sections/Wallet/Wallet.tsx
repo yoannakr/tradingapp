@@ -24,7 +24,8 @@ export const Wallet = () => {
         columns={tableColumns}
         dataSource={bitcoinsAvailability}
         showHeader={false}
-        scroll={{ y: 200, x: "max-content" }}
+        scroll={{ y: 180, x: "max-content" }}
+        style={{ marginBottom: "1em" }}
       />
     </WalletWrapper>
   );

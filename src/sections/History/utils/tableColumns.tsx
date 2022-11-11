@@ -13,11 +13,11 @@ export const tableColumns: ColumnsType<HistoryRecord> = [
     onFilter: (value: any, record: HistoryRecord) => record.type === value,
     render: (date: string) => "",
   },
-  // {
-  //   title: "Date",
-  //   dataIndex: "date",
-  //   key: "date",
-  // },
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
   {
     title: "Name",
     dataIndex: "name",
