@@ -119,7 +119,7 @@ export const SellCurrency = () => {
         style={{ width: "100%", backgroundColor: "#f6465d", color: "white" }}
         content={`Sell ${selectedCryptoCurrency?.ticker}`}
         onClick={handleSellCryptoCurrency}
-        disabled={(amount ?? 0) <= 0}
+        disabled={(amount?.toFixed(8) ?? 0) <= 0}
       />
     </SellCurrencyWrapper>
   );
