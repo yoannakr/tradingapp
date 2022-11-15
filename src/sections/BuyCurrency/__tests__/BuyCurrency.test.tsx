@@ -1,12 +1,12 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { BuyCurrency } from "../sections/BuyCurrency/BuyCurrency";
+import { BuyCurrency } from "../BuyCurrency";
 
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { testUseAppSelector } from "../shared/store/testAppSelector";
-import * as utils from "../sections/BuyCurrency/utils/calculateCryptoCurrencyCount";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { testUseAppSelector } from "../../../shared/store/testAppSelector";
+import * as utils from "../utils/calculateCryptoCurrencyCount";
 
-jest.mock("../app/hooks");
+jest.mock("../../../app/hooks");
 beforeEach(() => {
   const mockDispatch = jest.fn();
   const mockUseAppDispatch = useAppDispatch as jest.MockedFunction<
