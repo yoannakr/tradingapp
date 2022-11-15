@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../app/hooks";
 import { BOTable } from "../../shared/components/antd";
 import { selectRecords } from "./historySlice";
 import { tableColumns } from "./utils/tableColumns";
 
 export const History = () => {
-  const records = useSelector(selectRecords);
+  const records = useAppSelector(selectRecords);
 
   return (
     <div style={{ backgroundColor: "#16191e" }}>

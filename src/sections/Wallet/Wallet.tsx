@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../app/hooks";
 import { BOTable } from "../../shared/components/antd";
 import { WalletWrapper } from "./styled";
 import { tableColumns } from "./utils/tableColumns";
 import { selectBitcoinsAvailability } from "./walletSlice";
 
 export const Wallet = () => {
-  const bitcoinsAvailability = useSelector(selectBitcoinsAvailability);
+  const bitcoinsAvailability = useAppSelector(selectBitcoinsAvailability);
 
   return (
     <WalletWrapper>

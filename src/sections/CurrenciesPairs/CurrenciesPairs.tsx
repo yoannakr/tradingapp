@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { BOTable } from "../../shared/components/antd/DataDisplay/Table/BOTable";
 import { BOStarFilled } from "../../shared/components/antd/General/Icon/StarFilled/BOStarFilled";
 import { FAVORITES, SHOW_ONLY_FAVORITES } from "../../shared/utils/constants";
@@ -24,10 +23,10 @@ import { tableColumns } from "./utils/tableColumns";
 
 export const CurrenciesPairs = () => {
   const dispatch = useAppDispatch();
-  const selectedCurrency = useSelector(selectCurrency);
-  const currencies = useSelector(selectCurrencies);
-  const selectedTicker = useSelector(selectTicker);
-  const showOnlyFavorites = useSelector(selectShowOnlyFavorites);
+  const selectedCurrency = useAppSelector(selectCurrency);
+  const currencies = useAppSelector(selectCurrencies);
+  const selectedTicker = useAppSelector(selectTicker);
+  const showOnlyFavorites = useAppSelector(selectShowOnlyFavorites);
 
   const currenciesToDisplay = useMemo<FormattedCurrency[]>(
     () =>

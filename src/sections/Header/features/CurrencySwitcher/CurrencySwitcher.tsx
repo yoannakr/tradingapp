@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { BORadioGroup } from "../../../../shared/components/antd";
 import { changeSelectedCurrency, selectCurrency } from "../../headerSlice";
 import { useCurrenciesOptions } from "../../hooks/currencies/useCurrenciesOptions";
 
 export const CurrencySwitcher = () => {
-  const dispatch = useDispatch();
-  const selectedCurrency = useSelector(selectCurrency);
+  const dispatch = useAppDispatch();
+  const selectedCurrency = useAppSelector(selectCurrency);
 
   const { currenciesOptions, error } = useCurrenciesOptions();
   const handleCurrencyChange = (value: string) =>

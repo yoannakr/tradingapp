@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../app/hooks";
 import { getBitcoinPriceForCurrency } from "../../shared/utils/getBitcoinPriceForCurrency";
 import { selectCryptoCurrency } from "../CurrenciesPairs/currenciesPairsSlice";
 import { selectCurrency } from "../Header/headerSlice";
 import { PriceWrapper } from "./styled";
 
 export const Price = () => {
-  const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
-  const selectedCurrency = useSelector(selectCurrency);
+  const selectedCryptoCurrency = useAppSelector(selectCryptoCurrency);
+  const selectedCurrency = useAppSelector(selectCurrency);
 
   const price = getBitcoinPriceForCurrency(
     selectedCryptoCurrency,

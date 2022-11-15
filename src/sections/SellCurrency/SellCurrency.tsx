@@ -1,7 +1,6 @@
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { BOMessage, BOSlider } from "../../shared/components/antd";
 import { BOInputNumber } from "../../shared/components/antd/DataEntry/InputNumber/BOInputNumber";
 import { BOButton } from "../../shared/components/antd/General/Button/BOButton";
@@ -25,10 +24,10 @@ import { percentageCalculator } from "./utils/percentageCalculator";
 
 export const SellCurrency = () => {
   const dispatch = useAppDispatch();
-  const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
-  const selectedCurrency = useSelector(selectCurrency);
-  const balance = useSelector(selectBalance);
-  const availableCount = useSelector(selectAvailableCountAboutBitcoin);
+  const selectedCryptoCurrency = useAppSelector(selectCryptoCurrency);
+  const selectedCurrency = useAppSelector(selectCurrency);
+  const balance = useAppSelector(selectBalance);
+  const availableCount = useAppSelector(selectAvailableCountAboutBitcoin);
 
   const price = getBitcoinPriceForCurrency(
     selectedCryptoCurrency,

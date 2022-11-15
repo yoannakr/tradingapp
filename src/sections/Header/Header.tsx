@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { BOSpin } from "../../shared/components/antd/Feedback/Spin/BOSpin";
 import { CurrencySwitcher } from "./features/CurrencySwitcher/CurrencySwitcher";
 import {
@@ -14,9 +13,9 @@ import { HeaderWrapper } from "./styled";
 
 export const Header = () => {
   const dispatch = useAppDispatch();
-  const balance = useSelector(selectBalance);
-  const selectedCurrency = useSelector(selectCurrency);
-  const loading = useSelector(selectLoading);
+  const balance = useAppSelector(selectBalance);
+  const selectedCurrency = useAppSelector(selectCurrency);
+  const loading = useAppSelector(selectLoading);
 
   useEffect(() => {
     const fetchData = async () => {

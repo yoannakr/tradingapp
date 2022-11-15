@@ -1,7 +1,6 @@
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { BOMessage, BOSlider } from "../../shared/components/antd";
 import { BOInputNumber } from "../../shared/components/antd/DataEntry/InputNumber/BOInputNumber";
 import { BOButton } from "../../shared/components/antd/General/Button/BOButton";
@@ -22,9 +21,9 @@ import { calculateCryptoCurrencyCount } from "./utils/calculateCryptoCurrencyCou
 
 export const BuyCurrency = () => {
   const dispatch = useAppDispatch();
-  const selectedCurrency = useSelector(selectCurrency);
-  const selectedCryptoCurrency = useSelector(selectCryptoCurrency);
-  const balance = useSelector(selectBalance);
+  const selectedCurrency = useAppSelector(selectCurrency);
+  const selectedCryptoCurrency = useAppSelector(selectCryptoCurrency);
+  const balance = useAppSelector(selectBalance);
 
   const price = getBitcoinPriceForCurrency(
     selectedCryptoCurrency,
@@ -88,9 +87,10 @@ export const BuyCurrency = () => {
     <BuyCurrencyWrapper>
       <div style={{ marginBottom: "1em" }}>
         <span style={{ color: "#7f838c" }}>Avbl </span>
-        <span style={{ color: "white" }}>{`${balance.toFixed(
-          2
-        )} ${selectedCurrency}`}</span>
+        <span
+          data-testid="balance"
+          style={{ color: "white" }}
+        >{`${balance.toFixed(2)} ${selectedCurrency}`}</span>
       </div>
       <BOInputNumber
         label="Amount"
@@ -101,6 +101,7 @@ export const BuyCurrency = () => {
         onChange={handleAmountChange}
       />
       <BOInputNumber
+        data-testid="crypto-currency-count"
         label="Total"
         value={cryptoCurrencyCount.toFixed(8)}
         addonAfter={selectedCryptoCurrency?.ticker}
