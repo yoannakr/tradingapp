@@ -27,6 +27,13 @@ test("should be zero when currency is empty(false)", () => {
   expect(balance).toBe(0);
 });
 
+test("should be zero when currency not found", () => {
+  bitcoin.prices[0].amount = 256.89;
+
+  const balance = getBitcoinPriceForCurrency(bitcoin, "EGN");
+  expect(balance).toBe(0);
+});
+
 test.each([
   [1, 1],
   [156.48, 156.48],
