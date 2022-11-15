@@ -20,7 +20,7 @@ import {
 import { SellCurrencyWrapper } from "./styled";
 import { calculateReceivedAmount } from "./utils/calculateReceivedAmount";
 import { sliderMarks } from "../../shared/utils/sliderMarks";
-import { percentageCalculator } from "./utils/percentageCalculator";
+import { percentageCalculator } from "../../shared/utils/percentageCalculator";
 
 export const SellCurrency = () => {
   const dispatch = useAppDispatch();

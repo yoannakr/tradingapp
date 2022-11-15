@@ -14,7 +14,7 @@ import {
 } from "../Header/headerSlice";
 import { addRecord } from "../History/historySlice";
 import { RecordType } from "../History/types";
-import { percentageCalculator } from "../SellCurrency/utils/percentageCalculator";
+import { percentageCalculator } from "../../shared/utils/percentageCalculator";
 import { incrementBitcoinAvailability } from "../Wallet/walletSlice";
 import { BuyCurrencyWrapper } from "./styled";
 import { calculateCryptoCurrencyCount } from "./utils/calculateCryptoCurrencyCount";
